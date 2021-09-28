@@ -1,27 +1,26 @@
 const mongoose = require('mongoose');
 
-const MONGO_URI = '';
 
-mongoose
-  .connect(MONGO_URI, {
-    // options for the connect method to parse the URI
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    // sets the name of the DB that our collections are part of
-    dbName: 'Vacation', //<- change to the name of the database created with AtlasDB
-  })
-  .then((data) => console.log('Connected to Mongo DB.'))
-  .catch((err) => {
-    console.log(err);
-    console.log('Error with the mongoose connection within mongoose.connect.');
-  });
+// mongoose
+//   .connect(MONGO_URI, {
+//     // options for the connect method to parse the URI
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//     // sets the name of the DB that our collections are part of
+//     // dbName: 'Vacation', //<- change to the name of the database created with AtlasDB
+//   })
+//   .then((data) => console.log('Connected to Mongo DB.'))
+//   .catch((err) => {
+//     console.log(err);
+//     console.log('Error with the mongoose connection within mongoose.connect.');
+//   });
 
 const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
 const bcrypt = require('bcryptjs');
 
 const userSchema = new Schema({
-  username: {
+  email: {
     type: String,
     required: true,
     unique: true,
@@ -88,15 +87,16 @@ userSchema.pre('save', function (next) {
 });
 
 const User = mongoose.model('user', userSchema);
+const Job = mongoose.model('job', userSchema.applicationPosts)
 
 // the testSchema was made to test the database before setting up login and signup functionality
-const testSchema = new Schema({
-  test: String,
-});
+// const testSchema = new Schema({
+//   test: String,
+// });
 
-const Test = mongoose.model('test', testSchema);
+// const Test = mongoose.model('test', testSchema);
 
 module.exports = {
   User,
-  Test,
-};
+  Job
+}
