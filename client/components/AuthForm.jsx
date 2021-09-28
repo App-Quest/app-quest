@@ -1,15 +1,21 @@
 import React from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import {
   inputEmailActionCreator,
   inputPasswordActionCreator,
+  setEmailActionCreator,
+  setApplicationPostsActionCreator,
 } from '../actions/actions';
 
 const mapDispatchToProps = (dispatch) => ({
   inputEmailFunc: (emailInput) => dispatch(inputEmailActionCreator(emailInput)),
   inputPasswordFunc: (passwordInput) =>
     dispatch(inputPasswordActionCreator(passwordInput)),
+  setEmailFunc: (email) => dispatch(setEmailActionCreator(email)),
+  setApplicationPostsFunc: (applicationPosts) =>
+    dispatch(setApplicationPostsActionCreator(applicationPosts)),
 });
 
 const mapStateToProps = (state) => ({
@@ -23,7 +29,11 @@ const AuthForm = ({
   passwordInput,
   inputEmailFunc,
   inputPasswordFunc,
+  url,
+  setEmailFunc,
+  setApplicationPostsFunc,
 }) => {
+  const history = useHistory();
   const handleChange = (event) => {
     if (event.target.id === 'inputEmail') {
       inputEmailFunc(event.target.value);
@@ -32,20 +42,22 @@ const AuthForm = ({
       inputPasswordFunc(event.target.value);
     }
   };
-  const handleClick = (event) => {
-    fetch(`http://localhost:3000/${event.target.id}`, {
+  const handleClick = () => {
+    fetch(`/${url}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: {
+      body: JSON.stringify({
         email: emailInput,
         password: passwordInput,
-      },
+      }),
     })
       .then((data) => data.json())
       .then((results) => {
-        console.log(results);
+        setEmailFunc(results.email);
+        setApplicationPostsFunc(results.applicationPosts);
+        history.push('/apps');
       });
   };
   return (
@@ -59,10 +71,17 @@ const AuthForm = ({
       <TextField
         id='inputPassword'
         label='Password'
+        type='password'
         value={passwordInput}
         onChange={handleChange}
+        style={{ marginTop: '15px', marginBottom: '15px' }}
       />
       <Button onClick={handleClick}>{buttonLabel}</Button>
+      {url === 'signin' && (
+        <span id='signup-prompt'>
+          Click <Link to='signup'>here</Link> to sign up as a new user.
+        </span>
+      )}
     </div>
   );
 };

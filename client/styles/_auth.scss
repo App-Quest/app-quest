@@ -7,4 +7,12 @@
   margin-top: 30px;
   background-color: var(--color-grey-light-1);
   border-radius: var(--border-radius);
+
+  #signup-prompt {
+    text-align: center;
+    margin-top: 15px;
+  }
+  button {
+    background-color: lavender;
+  }
 }

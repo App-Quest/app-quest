@@ -1,10 +1,10 @@
 import React from 'react';
 import AuthForm from './AuthForm';
 
-const AuthPage = () => {
+const AuthPage = ({ buttonLabel, url }) => {
   return (
     <div className='mainPage'>
-      <AuthForm buttonLabel='Sign Up' id='signup' />
+      <AuthForm buttonLabel={buttonLabel} url={url} />
     </div>
   );
 };
