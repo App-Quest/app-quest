@@ -62,7 +62,7 @@ const AuthForm = ({
         value={passwordInput}
         onChange={handleChange}
       />
-      <Button>{buttonLabel}</Button>
+      <Button onClick={handleClick}>{buttonLabel}</Button>
     </div>
   );
 };
