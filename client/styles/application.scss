@@ -1,0 +1,10 @@
+@import 'variables.scss';
+@import 'auth.scss';
+
+html {
+  background-color: var(--color-background);
+}
+
+.mainPage {
+  width: 100%;
+}

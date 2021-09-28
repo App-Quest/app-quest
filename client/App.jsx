@@ -1,5 +1,8 @@
 import React from 'react';
+import AuthPage from './components/AuthPage';
 
-const App = () => <h1>Hello World!</h1>;
+const App = () => {
+  return <AuthPage />;
+};
 
 export default App;

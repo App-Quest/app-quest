@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/jaredDlewis/app-quest#readme",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "express": "^4.17.1",
     "mongoose": "^6.0.8",
     "node-fetch": "^3.0.0",

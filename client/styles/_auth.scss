@@ -1,0 +1,10 @@
+.form {
+  max-width: 330px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-top: 30px;
+  background-color: var(--color-grey-light-1);
+  border-radius: var(--border-radius);
+}
