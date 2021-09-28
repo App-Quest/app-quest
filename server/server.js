@@ -55,10 +55,10 @@ app.post('/signup', UserController.createUser, (req, res) => {
 });
 
 
-// home page route
-app.get('/home', JobController.getJobs, (req, res) => {
-  res.status(200)
-});
+// // home page route
+// app.get('/home', JobController.getJobs, (req, res) => {
+//   res.status(200)
+// });
 
 
 // // page not found error handler

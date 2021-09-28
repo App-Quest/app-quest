@@ -87,7 +87,7 @@ userSchema.pre('save', function (next) {
 });
 
 const User = mongoose.model('user', userSchema);
-const Job = mongoose.model('job', userSchema.applicationPosts)
+// const Job = mongoose.model('job', userSchema.applicationPosts)
 
 // the testSchema was made to test the database before setting up login and signup functionality
 // const testSchema = new Schema({
@@ -98,5 +98,5 @@ const Job = mongoose.model('job', userSchema.applicationPosts)
 
 module.exports = {
   User,
-  Job
+  // Job
 }
