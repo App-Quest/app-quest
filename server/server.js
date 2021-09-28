@@ -18,7 +18,6 @@ const password = 'all3GotHired';
 const cluster = 'AppQuest';
 const dbname = 'AppQuest';
 
-
 const MONGO_URI = `mongodb+srv://${username}:${password}@${cluster}.bhedd.mongodb.net/${dbname}?retryWrites=true&w=majority`;
 
 mongoose.connect(MONGO_URI, {
@@ -28,12 +27,13 @@ mongoose.connect(MONGO_URI, {
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: ')); // event listener for error connecting to mongodb
-db.once('open', () => { console.log('Connected to MongoDB')}) // event listener for connecting to mongodb
+db.once('open', () => {
+  console.log('Connected to MongoDB');
+}); // event listener for connecting to mongodb
 
 // leveraging express routes to group together user related routes
 // const userRouter = express.Router();
 // app.use('/user', userRouter);
-
 
 // send bundle.js
 app.use('/build', express.static(path.join(__dirname, '../build')));
@@ -47,15 +47,13 @@ app.get('/', (req, res) => {
 app.post('/signup', UserController.createUser, (req, res) => {
   // send back user
   // console.log('check on user info: ', res.locals.user)
-  res.status(200).json(res.locals.user)
+  res.status(200).json(res.locals.user);
 });
 
-
-// home page route
-app.get('/home', JobController.getJobs, (req, res) => {
-  res.status(200).
-})
-
+// // home page route
+// app.get('/home', JobController.getJobs, (req, res) => {
+//   res.status(200).
+// })
 
 // // page not found error handler
 app.use((err, req, res, next) => {
