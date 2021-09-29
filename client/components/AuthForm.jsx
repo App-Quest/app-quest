@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import GoogleButton from 'react-google-button';
 import {
   inputEmailActionCreator,
   inputPasswordActionCreator,
@@ -79,6 +80,18 @@ const AuthForm = ({
         console.log('Error in AuthForm handleClick fetch request: ', error);
       });
   };
+
+  const googleHandleClick = () => {
+    fetch('/google', {
+      method: 'GET',
+      mode: 'no-cors' 
+    })
+    .then((data) => console.log(data))
+    .then((result) => {
+      console.log('This is the result from get request to google: ',result)
+    })
+    .catch((err) => console.log('You have an error! ',err))
+  }
   return (
     <div className='form'>
       <TextField
@@ -108,6 +121,11 @@ const AuthForm = ({
         </span>
       )}
       {signInResponse && <span className='auth-prompt'>{signInResponse}</span>}
+      <center>
+        <a href='/google'>
+          <GoogleButton id='google' onClick={googleHandleClick}/>
+        </a>
+      </center>
     </div>
   );
 };

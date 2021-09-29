@@ -100,6 +100,7 @@ const Row = (props) => {
 const mapDispatchToProps = (dispatch) => ({
   setApplicationPosts: (applicationPosts) =>
     dispatch(setApplicationPostsActionCreator(applicationPosts)),
+  setEmail: (email) => dispatch(setEmailActionCreator(email)),
 });
 
 const mapStateToProps = (state) => ({
@@ -108,12 +109,22 @@ const mapStateToProps = (state) => ({
   email: state.auth.email,
 });
 
+
 const AppsTable = ({
   setApplicationPosts,
   applicationPosts,
   applicationPostsLength,
   email,
 }) => {
+  // useEffect(() => {
+  //   let cookie = document.cookie;
+  //   if(cookie) {
+  //     cookie = cookie.split('=');
+  //     let email = cookie[0];
+  //     console.log('cookie email: ', email)
+  //     setEmail(email);
+  //   }
+  // })
   useEffect(() => {
     fetch(`/apps?email=${email}`)
       .then((data) => data.json())

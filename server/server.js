@@ -1,10 +1,16 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const passport = require('passport');
+const auth = require('./routes/oauth');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 const mongoose = require('mongoose');
 const UserController = require('./controllers/UserController');
 const AppController = require('./controllers/AppController');
 const appQuestModel = require('./models/appQuestModels');
+const cors = require('cors');
+app.use(cors());
 
 // parse inputs
 app.use(express.json());
@@ -13,6 +19,71 @@ app.use(
     extended: true,
   })
 );
+
+// set session cookies
+app.use(
+  cookieSession({
+    name: 'app-quest',
+    keys: ['keys1', 'keys2'],
+  })
+);
+
+// send bundle.js
+app.use('/build', express.static(path.join(__dirname, '../build')));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// validating if users are logged in
+// const isLoggedIn = (req, res, next) => {
+//   if (req.user || res.cookie){
+//     next();
+//   } else {
+//     res.sendStatus(401);
+//   }
+// };
+
+// app.get('/failed', (req, res) => res.send('Login failed'));
+
+// app.get('/loggedIn', isLoggedIn, (req, res) => {
+//   console.log('This is printing after isLoggedIn: ',req.user);
+//   res.send(`Welcome ${req.user.displayName}`);
+// });
+
+// authenticate google profile and email address
+app.get('/google',passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+// redirect after google authenticates user
+app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }),
+function (req, res, next) {
+  // console.log(req.user);
+  req.body.email = req.user._json.email;
+  req.body.password = req.user._json.sub;
+  return next();
+},
+UserController.verifyUser,
+function (req, res, next) {
+  if (res.locals.userFound) {
+    // console.log('user found');
+    res.redirect('/appspage');
+  }
+  next();
+},
+UserController.createUser,
+function (req, res) {
+  res.redirect('/appspage');
+}
+);
+
+// direct here to destroy cookies
+app.get('/logOut', (req, res) => {
+  // req.session = null;
+  delete req.user;
+  req.logout();
+  delete res.cookie;
+  res.clearCookie('username');
+  res.redirect('/');
+});
 
 const username = 'AppQuestTeam';
 const password = 'all3GotHired';
@@ -36,11 +107,9 @@ db.once('open', () => {
 // const userRouter = express.Router();
 // app.use('/user', userRouter);
 
-// send bundle.js
-app.use('/build', express.static(path.join(__dirname, '../build')));
 
 // Send entrypoint
-app.get('/', (req, res) => {
+app.get(['/', '/appspage'], (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
@@ -69,10 +138,6 @@ app.get('/apps', AppController.findApplicationPosts, (req, res) => {
   res.status(200).json({ applicationPosts: res.locals.apps });
 });
 
-// // home page route
-// app.get('/home', JobController.getJobs, (req, res) => {
-//   res.status(200).
-// })
 
 // // page not found error handler
 // app.use((err, req, res, next) => {
