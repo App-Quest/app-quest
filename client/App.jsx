@@ -7,13 +7,13 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path='/'>
+        <Route exact path='/appspage'>
           <AuthPage buttonLabel='Sign In' url='signin' />
         </Route>
         <Route path='/signup'>
           <AuthPage buttonLabel='Sign Up' url='signup' />
         </Route>
-        <Route path='/appspage'>
+        <Route path='/'>
           <AppsPage />
         </Route>
       </Switch>
