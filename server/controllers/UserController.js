@@ -31,7 +31,9 @@ UserController.verifyUser = (req, res, next) => {
       // res.cookie('email', req.body.email)
       
       // if user email found and passwords match
-      const passwordsMatch = await bcrypt.compare(req.body.password, result.password).then((result) => result);
+      const passwordsMatch = await bcrypt
+        .compare(req.body.password, result.password)
+        .then((result) => result);
       if (passwordsMatch) {
         //  req.session.userID = result._id;
         //  req.session.email = result.email;
@@ -43,18 +45,17 @@ UserController.verifyUser = (req, res, next) => {
         return next();
       }
 
-      console.log('result after invalid password: ', res.locals.result)
+      console.log('result after invalid password: ', res.locals.result);
       res.locals.result = 'Invalid email/password';
       return next();
     })
-    .catch((err) => next({ message: `UserController.verifyUser: Error: ${err}` }));
+    .catch((err) =>
+      next({ message: `UserController.verifyUser: Error: ${err}` })
+    );
 };
 
-
 UserController.addApp = (req, res, next) => {
-  const newApp = User.applicationPosts
-}
-
-
+  const newApp = User.applicationPosts;
+};
 
 module.exports = UserController;

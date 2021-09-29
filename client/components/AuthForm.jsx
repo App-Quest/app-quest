@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TextField, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -113,7 +113,11 @@ const AuthForm = ({
       <Button onClick={handleClick}>{buttonLabel}</Button>
       {url === 'signin' && (
         <span className='auth-prompt'>
-          Click <Link to='signup'>here</Link> to sign up as a new user.
+          Click{' '}
+          <Link to='/signup' onClick={() => setSignInResponse('')}>
+            here
+          </Link>{' '}
+          to sign up as a new user.
         </span>
       )}
       {signInResponse && <span className='auth-prompt'>{signInResponse}</span>}

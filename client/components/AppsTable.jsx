@@ -27,7 +27,7 @@ const Row = (props) => {
   return (
     <React.Fragment>
       <TableRow>
-        <TableCell>
+        <TableCell style={{ maxWidth: '5px' }}>
           <IconButton
             aria-label='expand row'
             size='small'
@@ -40,13 +40,13 @@ const Row = (props) => {
           {row.company}
         </TableCell>
         <TableCell component='th' scope='row' style={{ fontSize: '14px' }}>
-          {row.position}
+          {row.location}
         </TableCell>
-        <TableCell align='center' style={{ fontSize: '14px' }}>
+        <TableCell component='th' scope='row' style={{ fontSize: '14px' }}>
           {row.position}
         </TableCell>
         <TableCell align='center'>
-          <button id={id} onClick={editApplication}>
+          <button id={id + 'button'} onClick={editApplication}>
             <Edit style={{ fontSize: 20 }} />
           </button>
         </TableCell>
@@ -71,7 +71,7 @@ const Row = (props) => {
                 }}
               >
                 <TableBody>
-                  <TableRow key={row.resume + id}>
+                  <TableRow key={'resume-body' + id}>
                     <TableCell>Resume</TableCell>
                     <TableCell>
                       <a href={row.resume} target='_blank'>
@@ -79,7 +79,7 @@ const Row = (props) => {
                       </a>
                     </TableCell>
                   </TableRow>
-                  <TableRow key={row.coverLetter + id}>
+                  <TableRow key={'cover-letter-body' + id}>
                     <TableCell>Cover Letter</TableCell>
                     <TableCell>
                       <a href={row.coverLetter} target='_blank'>
@@ -105,10 +105,17 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   applicationPosts: state.apps.applicationPosts,
+  applicationPostsLength: state.apps.applicationPostsLength,
   email: state.auth.email,
 });
 
-const AppsTable = ({ setApplicationPosts, applicationPosts, email }) => {
+
+const AppsTable = ({
+  setApplicationPosts,
+  applicationPosts,
+  applicationPostsLength,
+  email,
+}) => {
   // useEffect(() => {
   //   let cookie = document.cookie;
   //   if(cookie) {
@@ -118,7 +125,6 @@ const AppsTable = ({ setApplicationPosts, applicationPosts, email }) => {
   //     setEmail(email);
   //   }
   // })
-  
   useEffect(() => {
     fetch(`/apps?email=${email}`)
       .then((data) => data.json())
@@ -129,7 +135,7 @@ const AppsTable = ({ setApplicationPosts, applicationPosts, email }) => {
       .catch((error) => {
         console.log('Error in AppsTable useEffect fetch request: ', error);
       });
-  }, [applicationPosts]);
+  }, []);
 
   return (
     <TableContainer component={Paper} className='table-container'>
@@ -149,22 +155,22 @@ const AppsTable = ({ setApplicationPosts, applicationPosts, email }) => {
             <TableCell />
             <TableCell style={{ fontSize: '16px' }}>Company</TableCell>
             <TableCell style={{ fontSize: '16px' }}>Location</TableCell>
-            <TableCell align='center' style={{ fontSize: '16px' }}>
-              Position
-            </TableCell>
+            <TableCell style={{ fontSize: '16px' }}>Position</TableCell>
             <TableCell align='center' style={{ fontSize: '16px' }}>
               Edit
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {applicationPosts.map((application, index) => (
-            <Row
-              key={application.company + index}
-              id={application.company + index}
-              row={application}
-            />
-          ))}
+          {applicationPosts
+            .map((application, index) => (
+              <Row
+                key={application.company + index}
+                id={application.company + index}
+                row={application}
+              />
+            ))
+            .reverse()}
         </TableBody>
       </Table>
     </TableContainer>
