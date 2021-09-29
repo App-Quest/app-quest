@@ -19,3 +19,8 @@ export const setApplicationPostsActionCreator = (applicationPosts) => ({
   type: types.SET_APPLICATION_POSTS,
   payload: applicationPosts,
 });
+
+export const setSignInResponseActionCreator = (signInResponse) => ({
+  type: types.SET_SIGN_IN_RESPONSE,
+  payload: signInResponse,
+});
