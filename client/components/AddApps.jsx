@@ -57,7 +57,7 @@ const AddApps = ({
     updateApp(newApplication);
   };
   const handleClickCreate = () => {
-    fetch('/addapp', {
+    fetch('/apps', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

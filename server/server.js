@@ -57,13 +57,17 @@ app.post('/signin', UserController.verifyUser, (req, res) => {
 });
 
 app.post(
-  '/addapp',
+  '/apps',
   AppController.findApplicationPosts,
   AppController.addApp,
   (req, res) => {
     res.status(200).json(res.locals.userDoc);
   }
 );
+
+app.get('/apps', AppController.findApplicationPosts, (req, res) => {
+  res.status(200).json({ applicationPosts: res.locals.apps });
+});
 
 // // home page route
 // app.get('/home', JobController.getJobs, (req, res) => {

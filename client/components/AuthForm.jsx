@@ -70,7 +70,7 @@ const AuthForm = ({
           setSignInResponse('');
           inputEmail('');
           inputPassword('');
-          history.push('/apps');
+          history.push('/appspage');
         } else {
           setSignInResponse(results);
         }

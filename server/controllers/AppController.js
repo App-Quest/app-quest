@@ -33,7 +33,13 @@ const User = require('../models/appQuestModels');
 const AppController = {};
 
 AppController.findApplicationPosts = (req, res, next) => {
-  User.findOne({ email: req.body.email }).then(async (result) => {
+  let email;
+  if (req.body.email) {
+    email = req.body.email;
+  } else {
+    email = req.query.email;
+  }
+  User.findOne({ email }).then(async (result) => {
     if (result === null) {
       res.locals.result = 'user not found';
       return next();
@@ -46,7 +52,7 @@ AppController.findApplicationPosts = (req, res, next) => {
 };
 
 AppController.addApp = (req, res, next) => {
-  res.locals.apps.push(Object.assign(defaultApp, req.body.application));
+  res.locals.apps.push(req.body.application);
 
   // access applicationPosts property -> array
   // update it by pushing in the new AppObject using Object.assign
