@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 // mongoose
 //   .connect(MONGO_URI, {
 //     // options for the connect method to parse the URI
@@ -17,7 +16,8 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 const SALT_WORK_FACTOR = 10;
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const userSchema = new Schema({
   email: {
@@ -87,7 +87,7 @@ userSchema.pre('save', function (next) {
 });
 
 const User = mongoose.model('user', userSchema);
-const Job = mongoose.model('job', userSchema.applicationPosts)
+// const Job = mongoose.model('job', userSchema.applicationPosts)
 
 // the testSchema was made to test the database before setting up login and signup functionality
 // const testSchema = new Schema({
@@ -96,7 +96,4 @@ const Job = mongoose.model('job', userSchema.applicationPosts)
 
 // const Test = mongoose.model('test', testSchema);
 
-module.exports = {
-  User,
-  Job
-}
+module.exports = User;
