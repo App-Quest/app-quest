@@ -8,6 +8,7 @@ import store from '../client/store';
 // shallow render and traverse the shallow rendered tree.
 import AuthForm from '../client/components/AuthForm';
 import { expect } from '@jest/globals';
+import { TextField } from '@material-ui/core';
 
 // Newer Enzyme versions require an adapter to a particular version of React
 configure({ adapter: new Adapter() });
@@ -15,7 +16,6 @@ configure({ adapter: new Adapter() });
 describe('React unit tests', () => {
   describe('AuthForm', () => {
     let wrapper;
-    let email = '';
     const props = {
       buttonLabel: '',
       emailInput: '',
@@ -36,8 +36,7 @@ describe('React unit tests', () => {
         );
       });
 
-      it('should render am AuthForm component', () => {
-        console.log('wrapper DEBUG: ', wrapper.debug());
+      it('should be an AuthForm component', () => {
         expect(wrapper.find(AuthForm)).toHaveLength(1);
       });
     });

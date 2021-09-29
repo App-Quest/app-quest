@@ -25,6 +25,7 @@
     "url": "https://github.com/jaredDlewis/app-quest/issues"
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "globalSetup": "./jest-setup.js",
     "globalTeardown": "./jest-teardown.js"
   },
@@ -64,6 +65,8 @@
     "file-loader": "^6.2.0",
     "isomorphic-fetch": "^3.0.0",
     "jest": "^27.2.4",
+    "jsdom": "17.0.0",
+    "jsdom-global": "3.0.2",
     "redux-devtools-extension": "^2.13.9",
     "sass": "^1.37.5",
     "sass-loader": "^12.1.0",
