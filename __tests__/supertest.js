@@ -25,10 +25,10 @@ describe('Route integration', () => {
 
   describe('/signin', () => {
     describe('POST', () => {
-      it('responds with json containing user document and status of 200', (done) => {
+      it('if user exists, responds with json containing user document and status of 200', (done) => {
         request(server)
           .post('/signin')
-          .send({ email: 'super@gmail.com', password: 'super' })
+          .send({ email: 'admin', password: 'asmin' })
           .set('Accept', 'application/json')
           .expect(200)
           .end((err, res) => {
@@ -43,10 +43,10 @@ describe('Route integration', () => {
 
   describe('/apps', () => {
     describe('POST', () => {
-      it('responds with json containing user document and status of 200', (done) => {
+      it('if user exists, it responds with json containing user document and status of 200', (done) => {
         request(server)
           .post('/apps')
-          .send({ email: 'super@gmail.com', password: 'super' })
+          .send({ email: 'admin', password: 'asmin' })
           .set('Accept', 'application/json')
           .expect(200)
           .end((err, res) => {
@@ -55,6 +55,13 @@ describe('Route integration', () => {
           });
       });
     });
+
+    // describe('GET', () => {
+    //   it('responds with 200 status and json')
+    //     request(server)
+    //       .get('/apps')
+    //       .expect('')
+    // })
 
   });
 
