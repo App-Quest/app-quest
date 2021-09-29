@@ -40,4 +40,22 @@ describe('Route integration', () => {
 
   });
 
+
+  describe('/apps', () => {
+    describe('POST', () => {
+      it('responds with json containing user document and status of 200', (done) => {
+        request(server)
+          .post('/apps')
+          .send({ email: 'super@gmail.com', password: 'super' })
+          .set('Accept', 'application/json')
+          .expect(200)
+          .end((err, res) => {
+            if (err) return done(err);
+            return done();
+          });
+      });
+    });
+
+  });
+
 });
