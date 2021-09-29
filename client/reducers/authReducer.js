@@ -3,7 +3,7 @@ import * as types from '../constants/actionTypes';
 const initialState = {
   emailInput: '',
   passwordInput: '',
-  email: 'jareddlewis@gmail.com',
+  email: '',
   signInResponse: '',
 };
 
