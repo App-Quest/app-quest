@@ -11,13 +11,13 @@ import {
 } from '../actions/actions';
 
 const mapDispatchToProps = (dispatch) => ({
-  inputEmailFunc: (emailInput) => dispatch(inputEmailActionCreator(emailInput)),
-  inputPasswordFunc: (passwordInput) =>
+  inputEmail: (emailInput) => dispatch(inputEmailActionCreator(emailInput)),
+  inputPassword: (passwordInput) =>
     dispatch(inputPasswordActionCreator(passwordInput)),
-  setEmailFunc: (email) => dispatch(setEmailActionCreator(email)),
-  setApplicationPostsFunc: (applicationPosts) =>
+  setEmail: (email) => dispatch(setEmailActionCreator(email)),
+  setApplicationPosts: (applicationPosts) =>
     dispatch(setApplicationPostsActionCreator(applicationPosts)),
-  setSignInResponseFunc: (signInResponse) =>
+  setSignInResponse: (signInResponse) =>
     dispatch(setSignInResponseActionCreator(signInResponse)),
 });
 
@@ -31,21 +31,21 @@ const AuthForm = ({
   buttonLabel,
   emailInput,
   passwordInput,
-  inputEmailFunc,
-  inputPasswordFunc,
+  inputEmail,
+  inputPassword,
   url,
-  setEmailFunc,
-  setApplicationPostsFunc,
+  setEmail,
+  setApplicationPosts,
   signInResponse,
-  setSignInResponseFunc,
+  setSignInResponse,
 }) => {
   const history = useHistory();
   const handleChange = (event) => {
     if (event.target.id === 'inputEmail') {
-      inputEmailFunc(event.target.value);
+      inputEmail(event.target.value);
     }
     if (event.target.id === 'inputPassword') {
-      inputPasswordFunc(event.target.value);
+      inputPassword(event.target.value);
     }
   };
   const textEnterHandler = (event) => {
@@ -65,14 +65,14 @@ const AuthForm = ({
       .then((data) => data.json())
       .then((results) => {
         if (typeof results === 'object' && results.email) {
-          setEmailFunc(results.email);
-          setApplicationPostsFunc(results.applicationPosts);
-          setSignInResponseFunc('');
-          inputEmailFunc('');
-          inputPasswordFunc('');
+          setEmail(results.email);
+          setApplicationPosts(results.applicationPosts);
+          setSignInResponse('');
+          inputEmail('');
+          inputPassword('');
           history.push('/apps');
         } else {
-          setSignInResponseFunc(results);
+          setSignInResponse(results);
         }
       })
       .catch((error) => {

@@ -52,13 +52,18 @@ app.post('/signup', UserController.createUser, (req, res) => {
 });
 
 app.post('/signin', UserController.verifyUser, (req, res) => {
-  console.log('made it into signin route response')
+  console.log('made it into signin route response');
   res.status(200).json(res.locals.result);
 });
 
-app.post('/addApp', AppController.findApplicationPosts, AppController.addApp, (req, res) => {
-  res.status(200).json(res.locals.userDoc);
-})
+app.post(
+  '/addapp',
+  AppController.findApplicationPosts,
+  AppController.addApp,
+  (req, res) => {
+    res.status(200).json(res.locals.userDoc);
+  }
+);
 
 // // home page route
 // app.get('/home', JobController.getJobs, (req, res) => {
