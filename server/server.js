@@ -79,6 +79,6 @@ app.get('/apps', AppController.findApplicationPosts, (req, res) => {
 //   res.setStatus(400).send({ error: err });
 // });
 
-app.listen(3000, () => {
+module.exports = app.listen(process.env.PORT || 3000, () => {
   console.log('server is running at port 3000');
 });
