@@ -2,6 +2,7 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
   applicationPosts: [],
+  applicationPostsLength: 0,
   application: {
     company: '',
     location: '',
@@ -42,16 +43,20 @@ const appsReducer = (state = initialState, action) => {
     }
     case types.SET_APPLICATION_POSTS: {
       const applicationPosts = action.payload;
+      const applicationPostsLength = applicationPosts.length;
       return {
         ...state,
         applicationPosts,
+        applicationPostsLength,
       };
     }
     case types.CLEAR_APP_STATE: {
       const applicationPosts = state.applicationPosts;
+      const applicationPostsLength = applicationPosts.length;
       return {
         ...initialState,
         applicationPosts,
+        applicationPostsLength,
       };
     }
     default:

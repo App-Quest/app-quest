@@ -70,6 +70,8 @@ const AddApps = ({
       .then((data) => data.json())
       .then((results) => {
         setApplicationPosts(results.applicationPosts);
+      })
+      .then(() => {
         handleClose();
       })
       .catch((error) => {
