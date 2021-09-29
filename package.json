@@ -7,7 +7,7 @@
     "start": "node server/server.js",
     "build": "NODE_ENV=production webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open --hot\" \"cross-env NODE_ENV=development node server/server.js --ignore '*.json'\""
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve --open --hot\" \"cross-env NODE_ENV=development nodemon server/server.js --ignore '*.json'\""
   },
   "nodemonConfig": {
     "ignore": [
@@ -30,6 +30,7 @@
     "cookie-parser": "^1.4.5",
     "cookie-session": "^1.4.0",
     "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
     "bcrypt": "^5.0.1",
     "express": "^4.17.1",
     "mongodb": "^4.1.2",

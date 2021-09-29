@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const mongoose = require('mongoose');
 const UserController = require('./controllers/UserController');
+const AppController = require('./controllers/AppController');
 const appQuestModel = require('./models/appQuestModels');
 
 // parse inputs
@@ -122,8 +123,21 @@ app.post('/signup', UserController.createUser, (req, res) => {
 });
 
 app.post('/signin', UserController.verifyUser, (req, res) => {
-  console.log('made it into signin route response')
+  console.log('made it into signin route response');
   res.status(200).json(res.locals.result);
+});
+
+app.post(
+  '/apps',
+  AppController.findApplicationPosts,
+  AppController.addApp,
+  (req, res) => {
+    res.status(200).json(res.locals.userDoc);
+  }
+);
+
+app.get('/apps', AppController.findApplicationPosts, (req, res) => {
+  res.status(200).json({ applicationPosts: res.locals.apps });
 });
 
 // // home page route
