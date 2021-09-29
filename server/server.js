@@ -50,15 +50,20 @@ app.post('/signup', UserController.createUser, (req, res) => {
   res.status(200).json(res.locals.user);
 });
 
+app.post('/signin', UserController.verifyUser, (req, res) => {
+  console.log('made it into signin route response')
+  res.status(200).json(res.locals.result);
+});
+
 // // home page route
 // app.get('/home', JobController.getJobs, (req, res) => {
 //   res.status(200).
 // })
 
 // // page not found error handler
-app.use((err, req, res, next) => {
-  res.setStatus(400).send({ error: err });
-});
+// app.use((err, req, res, next) => {
+//   res.setStatus(400).send({ error: err });
+// });
 
 app.listen(3000, () => {
   console.log('server is running at port 3000');
