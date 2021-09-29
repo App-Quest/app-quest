@@ -9,6 +9,8 @@ const mongoose = require('mongoose');
 const UserController = require('./controllers/UserController');
 const AppController = require('./controllers/AppController');
 const appQuestModel = require('./models/appQuestModels');
+const cors = require('cors');
+app.use(cors());
 
 // parse inputs
 app.use(express.json());
@@ -33,47 +35,44 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // validating if users are logged in
-const isLoggedIn = (req, res, next) => {
-  if (req.user || res.cookie){
-    next();
-  } else {
-    res.sendStatus(401);
-  }
-};
+// const isLoggedIn = (req, res, next) => {
+//   if (req.user || res.cookie){
+//     next();
+//   } else {
+//     res.sendStatus(401);
+//   }
+// };
 
-app.get('/failed', (req, res) => res.send('Login failed'));
+// app.get('/failed', (req, res) => res.send('Login failed'));
 
-app.get('/loggedIn', isLoggedIn, (req, res) => {
-  console.log('This is printing after isLoggedIn: ',req.user);
-  res.send(`Welcome ${req.user.displayName}`);
-});
+// app.get('/loggedIn', isLoggedIn, (req, res) => {
+//   console.log('This is printing after isLoggedIn: ',req.user);
+//   res.send(`Welcome ${req.user.displayName}`);
+// });
 
-app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+// authenticate google profile and email address
+app.get('/google',passport.authenticate('google', { scope: ['profile', 'email'] }));
 
+// redirect after google authenticates user
 app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }),
-  function(req, res){
-    res.redirect('/')
-    console.log('response after the redirect:', res.user);
-    console.log('Everything after THIS is not from the response!!!')
+function (req, res, next) {
+  // console.log(req.user);
+  req.body.email = req.user._json.email;
+  req.body.password = req.user._json.sub;
+  return next();
+},
+UserController.verifyUser,
+function (req, res, next) {
+  if (res.locals.userFound) {
+    // console.log('user found');
+    res.redirect('/appspage');
   }
-  // function (req, res, next) {
-  //   console.log('This is the req.user: ',req.user);
-  //   req.body.email = req.user._json.email;
-  //   req.body.password = req.user._json.sub;
-  //   return next();
-  // },
-  // userController.findUser,
-  // function (req, res, next) {
-  //   if (res.locals.userFound) {
-  //     console.log('user found');
-  //     res.redirect('/dashboard');
-  //   }
-  //   next();
-  // },
-  // userController.addUser,
-  // function (req, res) {
-  //   res.redirect('/dashboard');
-  // }
+  next();
+},
+UserController.createUser,
+function (req, res) {
+  res.redirect('/appspage');
+}
 );
 
 // direct here to destroy cookies
@@ -85,7 +84,6 @@ app.get('/logOut', (req, res) => {
   res.clearCookie('username');
   res.redirect('/');
 });
-
 
 const username = 'AppQuestTeam';
 const password = 'all3GotHired';
@@ -111,7 +109,7 @@ db.once('open', () => {
 
 
 // Send entrypoint
-app.get('/', (req, res) => {
+app.get(['/', '/appspage'], (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../index.html'));
 });
 
@@ -140,10 +138,6 @@ app.get('/apps', AppController.findApplicationPosts, (req, res) => {
   res.status(200).json({ applicationPosts: res.locals.apps });
 });
 
-// // home page route
-// app.get('/home', JobController.getJobs, (req, res) => {
-//   res.status(200).
-// })
 
 // // page not found error handler
 // app.use((err, req, res, next) => {

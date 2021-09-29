@@ -21,7 +21,7 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       // use the profile info to check if the user is registered 
-        console.log('This is the profile from Google: ', profile);
+        // console.log('This is the profile from Google: ', profile);
         return done(null, profile);
     }
   )
