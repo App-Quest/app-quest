@@ -1,7 +1,7 @@
 import React from 'react';
 
-const AuthPage = () => {
-  return <div className='mainPage'></div>;
+const AppsPage = () => {
+  return <div className='appsPage'></div>;
 };
 
-export default AuthPage;
+export default AppsPage;

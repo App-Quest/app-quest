@@ -1,5 +1,6 @@
 @import 'variables.scss';
 @import 'auth.scss';
+@import 'apps.scss';
 
 html {
   background-color: var(--color-background);
@@ -8,4 +9,17 @@ html {
 
 .authPage {
   width: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
