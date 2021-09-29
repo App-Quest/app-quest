@@ -69,15 +69,6 @@ app.get('/apps', AppController.findApplicationPosts, (req, res) => {
   res.status(200).json({ applicationPosts: res.locals.apps });
 });
 
-// // home page route
-// app.get('/home', JobController.getJobs, (req, res) => {
-//   res.status(200).
-// })
-
-// // page not found error handler
-// app.use((err, req, res, next) => {
-//   res.setStatus(400).send({ error: err });
-// });
 
 module.exports = app.listen(process.env.PORT || 3000, () => {
   console.log('server is running at port 3000');
