@@ -4,10 +4,18 @@ const initialState = {
   emailInput: '',
   passwordInput: '',
   email: '',
+  signInResponse: '',
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
+    case types.SET_SIGN_IN_RESPONSE: {
+      const signInResponse = action.payload;
+      return {
+        ...state,
+        signInResponse,
+      };
+    }
     case types.SET_EMAIL: {
       const email = action.payload;
       return {

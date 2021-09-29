@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AuthPage from './components/AuthPage';
+import AppsPage from './components/AppsPage';
 
 const App = () => {
   return (
@@ -12,8 +13,8 @@ const App = () => {
         <Route path='/signup'>
           <AuthPage buttonLabel='Sign Up' url='signup' />
         </Route>
-        <Route path='/apps'>
-          <h1>Apps</h1>
+        <Route path='/appspage'>
+          <AppsPage />
         </Route>
       </Switch>
     </Router>
