@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 // mongoose
 //   .connect(MONGO_URI, {
 //     // options for the connect method to parse the URI
@@ -98,4 +97,3 @@ const User = mongoose.model('user', userSchema);
 // const Test = mongoose.model('test', testSchema);
 
 module.exports = User;
-

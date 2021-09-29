@@ -22,12 +22,14 @@ UserController.verifyUser = (req, res, next) => {
       console.log('result if user not found: ', result);
       // if user email not found
       if (result === null) {
-        res.locals.result = 'User password error';
-        throw new Error(
-          'Invalid email/password'
-        );
+        console.log('result after findingOne: ', result);
+        res.locals.result = 'Invalid email/password';
+        return next();
+        // throw new Error(
+        //   'Invalid email/password'
+        // );
       }
-      console.log('result after findingOne: ', result);
+      // console.log('result after findingOne: ', result);
       // if user email found and passwords match
       const passwordsMatch = await bcrypt.compare(req.body.password, result.password).then((result) => result);
       if (passwordsMatch) {
@@ -40,8 +42,8 @@ UserController.verifyUser = (req, res, next) => {
         return next();
       }
 
-      res.locals.result = 'Invalid email/password';
       console.log('result after invalid password: ', res.locals.result)
+      res.locals.result = 'Invalid email/password';
       return next();
     })
     .catch((err) => next({ message: `UserController.verifyUser: Error: ${err}` }));
