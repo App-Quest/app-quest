@@ -67,8 +67,6 @@ const userSchema = new Schema({
         competitors: String,
         techStack: String,
       },
-      confidencePre: String,
-      confidencePost: String,
       reflection: {
         good: String,
         bad: String,
