@@ -3,6 +3,7 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const UserController = require('./controllers/UserController');
+const AppController = require('./controllers/AppController');
 const appQuestModel = require('./models/appQuestModels');
 
 // parse inputs
@@ -54,6 +55,10 @@ app.post('/signin', UserController.verifyUser, (req, res) => {
   console.log('made it into signin route response')
   res.status(200).json(res.locals.result);
 });
+
+app.post('/addApp', AppController.findApplicationPosts, AppController.addApp, (req, res) => {
+  res.status(200).json(res.locals.userDoc);
+})
 
 // // home page route
 // app.get('/home', JobController.getJobs, (req, res) => {
