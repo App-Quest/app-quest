@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const passport = require('passport');
-const oauth = require('./oauth')
+const auth = require('./routes/oauth');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
 const mongoose = require('mongoose');
@@ -16,6 +16,73 @@ app.use(
     extended: true,
   })
 );
+
+// set session cookies
+app.use(
+  cookieSession({
+    name: 'app-quest',
+    keys: ['keys1', 'keys2'],
+  })
+);
+
+// send bundle.js
+app.use('/build', express.static(path.join(__dirname, '../build')));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// validating if users are logged in
+const isLoggedIn = (req, res, next) => {
+  if (req.user || res.cookie){
+    next();
+  } else {
+    res.sendStatus(401);
+  }
+};
+
+app.get('/failed', (req, res) => res.send('Login failed'));
+
+app.get('/loggedIn', isLoggedIn, (req, res) => {
+  console.log('This is printing after isLoggedIn: ',req.user);
+  res.send(`Welcome ${req.user.displayName}`);
+});
+
+app.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }),
+  function(req, res){
+    res.redirect('/loggedIn')
+  }
+  // function (req, res, next) {
+  //   console.log('This is the req.user: ',req.user);
+  //   req.body.email = req.user._json.email;
+  //   req.body.password = req.user._json.sub;
+  //   return next();
+  // },
+  // userController.findUser,
+  // function (req, res, next) {
+  //   if (res.locals.userFound) {
+  //     console.log('user found');
+  //     res.redirect('/dashboard');
+  //   }
+  //   next();
+  // },
+  // userController.addUser,
+  // function (req, res) {
+  //   res.redirect('/dashboard');
+  // }
+);
+
+// direct here to destroy cookies
+app.get('/logOut', (req, res) => {
+  // req.session = null;
+  delete req.user;
+  req.logout();
+  delete res.cookie;
+  res.clearCookie('username');
+  res.redirect('/');
+});
+
 
 const username = 'AppQuestTeam';
 const password = 'all3GotHired';
@@ -39,8 +106,6 @@ db.once('open', () => { console.log('Connected to MongoDB')}) // event listener 
 // app.use('/user', userRouter);
 
 
-// send bundle.js
-app.use('/build', express.static(path.join(__dirname, '../build')));
 
 // Send entrypoint
 app.get('/', (req, res) => {
@@ -54,7 +119,6 @@ app.post('/signup', UserController.createUser, (req, res) => {
   res.status(200).json(res.locals.user)
 });
 
-
 // // home page route
 // app.get('/home', JobController.getJobs, (req, res) => {
 //   res.status(200)
@@ -62,9 +126,9 @@ app.post('/signup', UserController.createUser, (req, res) => {
 
 
 // // page not found error handler
-app.use((err, req, res, next) => {
-  res.setStatus(400).send({ error: err });
-});
+// app.use((err, req, res, next) => {
+//   res.setStatus(400).send({ error: err });
+// });
 
 app.listen(3000, () => {
   console.log('server is running at port 3000');

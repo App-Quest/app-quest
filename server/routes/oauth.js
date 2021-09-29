@@ -7,6 +7,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((user, done) => {
+  // may need to add a User.findOne function
   done(null, user);
 });
 
@@ -16,11 +17,12 @@ passport.use(
       clientID:
         '881497402639-8t295lusfd26cc0c3u3cib8qq2ais2r9.apps.googleusercontent.com',
       clientSecret: 'L2VUc5_O-gpjlTXG4unBgaPY',
-      callbackURL: 'http://localhost:3000/auth/google/callback',
+      callbackURL: 'http://localhost:8080/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
-      console.log(profile);
-      return done(null, profile);
+      // use the profile info to check if the user is registered 
+        console.log('This is the profile from Google: ', profile);
+        return done(null, profile);
     }
   )
 );

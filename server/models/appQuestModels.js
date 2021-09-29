@@ -96,7 +96,4 @@ const User = mongoose.model('user', userSchema);
 
 // const Test = mongoose.model('test', testSchema);
 
-module.exports = {
-  User,
-  // Job
-}
+module.exports = User;
