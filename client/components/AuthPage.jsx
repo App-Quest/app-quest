@@ -3,7 +3,7 @@ import AuthForm from './AuthForm';
 
 const AuthPage = ({ buttonLabel, url }) => {
   return (
-    <div className='mainPage'>
+    <div className='authPage'>
       <AuthForm buttonLabel={buttonLabel} url={url} />
     </div>
   );

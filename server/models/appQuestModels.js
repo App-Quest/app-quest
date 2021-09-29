@@ -41,39 +41,25 @@ const userSchema = new Schema({
       dateAdded: Date,
       dateLastEdited: Date,
       position: String,
-      contact: {
-        name: String,
-        phone: String,
-        email: String,
-      },
+      contactName: String,
+      contactPhone: String,
+      contactEmail: String,
       status: String,
       priority: String,
-      coverLetter: {
-        type: String,
-      },
-      nextSteps: {
-        type: String,
-      },
-      notes: {
-        type: String,
-      },
+      coverLetter: String,
+      nextSteps: String,
+      notes: String,
       preparation: String, // what steps did you take to prepare? algo practice, sdi practice, mock interviews.. etc
-      research: {
-        // in case we plug into Ahad team app
-        employeeCount: String,
-        revenue: String,
-        mission: String,
-        valueProp: String,
-        competitors: String,
-        techStack: String,
-      },
-      confidencePre: String,
-      confidencePost: String,
-      reflection: {
-        good: String,
-        bad: String,
-        improvementPlan: String,
-      },
+      // in case we plug into Ahad team app
+      researchEmployeeCount: String,
+      researchRevenue: String,
+      researchMission: String,
+      researchValueProp: String,
+      researchCompetitors: String,
+      researchTechStack: String,
+      reflectionGood: String,
+      reflectionBad: String,
+      reflectionImprovementPlan: String,
     },
   ],
 });

@@ -1,0 +1,23 @@
+.appsPage {
+  width: calc(100% - 120px);
+  max-width: 700px;
+  background-color: var(--color-grey-light-1);
+  padding: 30px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  flex-grow: 1;
+}
+.add-apps {
+  button {
+    background-color: var(--color-card-primary);
+    color: var(--color-grey-light-1);
+    &:hover {
+      color: var(--color-black);
+      background-color: var(--color-darker-lavendar);
+    }
+  }
+}
+
+.table-container {
+  margin-top: 30px;
+}
