@@ -51,7 +51,9 @@ app.get('/google', passport.authenticate('google', { scope: ['profile', 'email']
 
 app.get('/google/callback', passport.authenticate('google', { failureRedirect: '/' }),
   function(req, res){
-    res.redirect('/loggedIn')
+    res.redirect('/')
+    console.log('response after the redirect:', res.user);
+    console.log('Everything after THIS is not from the response!!!')
   }
   // function (req, res, next) {
   //   console.log('This is the req.user: ',req.user);

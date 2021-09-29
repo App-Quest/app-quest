@@ -4,6 +4,7 @@ const initialState = {
   emailInput: '',
   passwordInput: '',
   email: '',
+  
 };
 
 const authReducer = (state = initialState, action) => {
